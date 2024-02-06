@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-    <a href="{{ route('admin.projects.index') }}">Indietro</a>
+    <a href="{{ route('admin.projects.index') }}" class="btn btn-primary btn-sm my-3">Indietro</a>
     <form action="{{ route('admin.projects.store') }}" method="POST">
         @csrf
         <label for="title" class="form-label">Titolo progetto</label>

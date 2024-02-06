@@ -1,20 +1,26 @@
 @extends('layouts.admin')
 
 @section('content')
-    <a href="{{ route('admin.dashboard') }}">Torna alla dashboard</a> -
-    <a href="{{ route('admin.projects.create') }}">Nuovo progetto</a>
-    <ul>
+    <div class="my-3">
+        <a href="{{ route('admin.dashboard') }}" class="btn btn-primary btn-sm">Torna alla dashboard</a>
+        <a href="{{ route('admin.projects.create') }}" class="btn btn-primary btn-sm">Nuovo progetto</a>
+    </div>
+    <ul class="list-unstyled">
         @foreach ($projects as $project)
             <li>
-                <div>
-                    {{ $project->title }} - <a href="{{ route('admin.projects.show', $project) }}">Dettagli</a> - <a
-                        href="{{ route('admin.projects.edit', $project) }}">Modifica</a>
+                <div class="d-flex justify-content-between align-items-center border-bottom my-3">
+                    <div>{{ $project->id }} - {{ $project->title }}</div>
+                    <div>
+                        <a href="{{ route('admin.projects.show', $project) }}" class="btn btn-primary btn-sm">Dettagli</a>
+                        <a href="{{ route('admin.projects.edit', $project) }}" class="btn btn-secondary btn-sm">Modifica</a>
+                        {{-- Button trigger modal  --}}
+                        <button type="button" class="btn btn-danger btn-sm my-2" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal-{{ $project->id }}">
+                            Elimina progetto
+                        </button>
+                    </div>
                 </div>
-                {{-- Button trigger modal  --}}
-                <button type="button" class="btn btn-danger btn-sm my-2" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal-{{ $project->id }}">
-                    Elimina progetto
-                </button>
+
                 {{-- Button trigger modal  --}}
 
                 {{-- Modal  --}}
