@@ -15,6 +15,7 @@
                         @endif
 
                         {{ __('You are logged in!') }}
+                        <a href="{{ route('admin.projects.index') }}">Elenco progetti</a>
                     </div>
                 </div>
             </div>
