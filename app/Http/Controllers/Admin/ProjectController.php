@@ -37,7 +37,7 @@ class ProjectController extends Controller
         $project = new Project();
         $project->fill($data);
         $project->save();
-        return redirect()->route('admin.projects.index');
+        return redirect()->route('admin.projects.index', $project->id);
     }
 
     /**
@@ -45,7 +45,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        //
+        return view('admin.projects.show', compact('project'));
     }
 
     /**
@@ -53,15 +53,23 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        //
+        return view('admin.projects.edit', compact('project'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProjectRequest $request, Project $project)
+    public function update(Request $request, Project $project)
     {
-        //
+        $data = $this->validation($request->all());
+
+
+        $project->update($data);
+
+        $project->save();
+
+
+        return redirect()->route('admin.projects.show', $project->id);
     }
 
     /**
