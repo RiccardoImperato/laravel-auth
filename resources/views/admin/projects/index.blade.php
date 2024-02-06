@@ -1,13 +1,14 @@
 @extends('layouts.admin')
 
 @section('content')
+    <a href="{{ route('admin.dashboard') }}">Torna alla dashboard</a> -
     <a href="{{ route('admin.projects.create') }}">Nuovo progetto</a>
     <ul>
         @foreach ($projects as $project)
             <li>
                 <div>
-                    {{ $project->title }}
-
+                    {{ $project->title }} - <a href="{{ route('admin.projects.show', $project) }}">Dettagli</a> - <a
+                        href="{{ route('admin.projects.edit', $project) }}">Modifica</a>
                 </div>
                 {{-- Button trigger modal  --}}
                 <button type="button" class="btn btn-danger btn-sm my-2" data-bs-toggle="modal"
@@ -17,8 +18,8 @@
                 {{-- Button trigger modal  --}}
 
                 {{-- Modal  --}}
-                <div class="modal fade" id="exampleModal-{{ $project->id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
+                <div class="modal fade" id="exampleModal-{{ $project->id }}" tabindex="-1"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header border-0">
