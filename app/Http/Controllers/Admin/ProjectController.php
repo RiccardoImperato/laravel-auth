@@ -8,6 +8,7 @@ use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
@@ -31,11 +32,11 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Project $project)
     {
         $data = $this->validation($request->all());
-        $project = new Project();
         $project->fill($data);
+        $project->slug = Str::slug($data['title']);
         $project->save();
         return redirect()->route('admin.projects.index', $project->id);
     }
@@ -62,13 +63,9 @@ class ProjectController extends Controller
     public function update(Request $request, Project $project)
     {
         $data = $this->validation($request->all());
-
-
         $project->update($data);
-
+        $project->slug = Str::slug($data['title']);
         $project->save();
-
-
         return redirect()->route('admin.projects.show', $project->id);
     }
 
@@ -88,6 +85,7 @@ class ProjectController extends Controller
             $data,
             [
                 'title' => 'required|max:50',
+                'description' => 'nullable|max:500'
             ],
             [
                 'title.required' => 'Titolo richiesto: inserisci un titolo per proseguire',
