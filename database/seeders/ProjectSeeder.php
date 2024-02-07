@@ -18,8 +18,8 @@ class ProjectSeeder extends Seeder
         for ($i = 0; $i < 50; $i++) {
             $project = new Project();
             $project->title = $faker->sentence(3);
+            $project->description = $faker->text(200);
             $project->slug = Str::of($project->title)->slug('-');
-            $project->description = $faker->sentence(20);
             $project->save();
         }
     }
