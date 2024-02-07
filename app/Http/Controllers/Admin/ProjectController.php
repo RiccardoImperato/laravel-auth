@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class ProjectController extends Controller
@@ -32,13 +30,14 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Project $project)
+    public function store(StoreProjectRequest $request, Project $project)
     {
-        $data = $this->validation($request->all());
-        $project->fill($data);
+        $data = $request->validated();
+        $project->title = $data['title'];
+        $project->description = $data['description'];
         $project->slug = Str::slug($data['title']);
         $project->save();
-        return redirect()->route('admin.projects.index', $project->id);
+        return redirect()->route('admin.projects.index', $project)->with('message', "Progetto $project->title creato!");
     }
 
     /**
@@ -60,13 +59,13 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Project $project)
+    public function update(UpdateProjectRequest $request, Project $project)
     {
-        $data = $this->validation($request->all());
+        $data = $request->validated();
         $project->update($data);
         $project->slug = Str::slug($data['title']);
         $project->save();
-        return redirect()->route('admin.projects.show', $project->id);
+        return redirect()->route('admin.projects.show', $project);
     }
 
     /**
@@ -75,23 +74,6 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         $project->delete();
-
         return redirect()->route('admin.projects.index');
-    }
-
-    public function validation($data)
-    {
-        $validator = Validator::make(
-            $data,
-            [
-                'title' => 'required|max:50',
-                'description' => 'nullable|max:500'
-            ],
-            [
-                'title.required' => 'Titolo richiesto: inserisci un titolo per proseguire',
-            ]
-        )->validate();
-
-        return $validator;
     }
 }
