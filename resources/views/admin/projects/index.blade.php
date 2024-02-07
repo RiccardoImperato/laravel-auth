@@ -47,8 +47,7 @@
                                         <div class="modal-footer border-0">
                                             <button type="button" class="btn btn-secondary"
                                                 data-bs-dismiss="modal">Chiudi</button>
-                                            <form action="{{ route('admin.projects.destroy', $project->id) }}"
-                                                method="POST">
+                                            <form action="{{ route('admin.projects.destroy', $project) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <input class="btn btn-danger" type="submit" value="Elimina">
