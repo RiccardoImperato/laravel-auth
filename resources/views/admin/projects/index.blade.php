@@ -4,6 +4,19 @@
     <div class="my-3">
         <a href="{{ route('admin.projects.create') }}" class="btn btn-primary btn-sm">Nuovo progetto</a>
     </div>
+    @if (session('message'))
+        <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
+            <div id="liveToast" class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header text-bg-secondary">
+                    <strong class="me-auto">Notifica</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body text-bg-secondary rounded-bottom">
+                    {{ session('message') }}
+                </div>
+            </div>
+        </div>
+    @endif
     <table class="table">
         <thead>
             <tr>
